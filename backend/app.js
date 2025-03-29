@@ -2,12 +2,25 @@ const dotenv = require('dotenv');
 dotenv.config();
 const express = require('express');
 const cors  = require('cors');
-// const mongoose = require('mongoose');
+const connectTodb = require('./db/db');
+const userRoutes = require('./routes/user.routes.js');
 const app = express();
 
+
+connectTodb();
+
+
 app.use(cors())
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+
+// app.get('/', (req, res) => {
+//   res.send('Hello World');
+// });
+
+
+app.use('/users', userRoutes);
 
 module.exports = app;
